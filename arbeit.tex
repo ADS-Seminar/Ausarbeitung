@@ -48,13 +48,89 @@
 
 %% hier Titel und Autorennamen eintragen
 
-\subject{Bachelorarbeit}
-\title{Titel der Arbeit} % Geben Sie hier den Titel Ihrer Arbeit an.
-\author{Testvorname Testnachname} % Geben Sie Ihren Namen an. 
+\subject{Seminararbeit} % Geben Sie die Art der Arbeit an
+\title{Randomisierte Datenstrukturen - Treaps} % Geben Sie hier den Titel Ihrer Arbeit an.
+\author{Moritz Beck, Robert McDaniel} % Geben Sie Ihren Namen an. 
+\date{Eingereicht am XX. YY 20ZZ} % Geben Sie das Abgabedatum an
+\titlehead{Julius-Maximilians-Universität Würzburg\\
+Institut für Informatik\\
+Lehrstuhl für Informatik I\\
+Effiziente Algorithmen und wissensbasierte Systeme}
+\publishers{Betreuer:\\
+Prof.\ Dr.\ Alexander Wolff\\
+Dipl.-Inf.\ Phillip Kindermann} % Geben Sie den Namen des weiteren Betreuers an.
 \maketitle
 \tableofcontents
 
 %%%%% hier den Text einfügen
+
+\chapter{Einführung}
+\label{sec:intro}
+
+Treaps sind eine baumartige Datenstruktur, bei der das Sortieren der eingefügten Daten auf zwei Arten erfolgt: Zum Einen werden die Schlüssel wie in einem Binärbaum sortiert, und zum Anderen werden die Knoten durch eine Priorität wie in einem Heap sortiert. In dieser Arbeit wird insbesondere auf eine Implementierung von Treaps eingegangen, bei der die Priorität zufällig gewählt wird. Dies bringt einige Vorteile gegenüber anderen Baumarten, wie zum Beispiel eine hohe Wahrscheinlichkeit, einen balancierten Baum zu erhalten, was die Laufzeit von Operationen verbessert.
+
+Im Laufe dieser Arbeit wird in \ref{sec:motivation} zuerst auf die Situation eingegangen, die zum Einsatz von Treaps führt. Genauer wird in \ref{sec:motivationbasics} der Aufbau der Datenstruktur, die wir erreichen wollen, erklärt, in \ref{sec:binaryruntime} die Laufzeiten der gewünschten Methoden bei binären Suchbäumen aufgezeigt, und bei \ref{sec:binaryproblems} auf die Probleme bei Binärbäumen eingegangen.
+
+In \ref{sec:treaps} die Treaps als Lösung für diese Probleme dargestellt. Genauer werden in \ref{sec:treapsbasics} die Grundlagen für den Aufbau von Treaps aufgezeigt, in \ref{sec:uniquetreaps} die Existenz eines eindeutigen Treaps für eine gegebene Menge an Paaren von Schlüsseln und Prioritäten bewiesen, was zeigt, dass die Insert-Reihenfolge bei Treaps egal ist. In \ref{sec:implementing} werden die gewünschten Methoden implementiert und in Pseudocode beschrieben.
+
+%TODO Laufzeitanalyse
+
+\chapter{Motivation}
+\label{sec:motivation}
+
+\section{Grundmotivation}
+\label{sec:motivationbasics}
+
+\section{Laufzeiten bei binären Suchbäumen}
+\label{sec:binaryruntime}
+
+\section{Probleme bei binären Suchbäumen}
+\label{sec:binaryproblems}
+
+\chapter{Treaps}
+\label{sec:treaps}
+
+\section{Grundlagen}
+\label{sec:treapsbasics}
+
+\section{Existenz eindeutiger Treaps}
+\label{sec:uniquetreaps}
+
+\section{Implementierung}
+\label{sec:implementing}
+
+\subsection{Find}
+\label{sec:find}
+
+\subsection{Insert}
+\label{sec:insert}
+
+\subsection{Delete}
+\label{sec:delete}
+
+\subsection{Join}
+\label{sec:join}
+
+\subsection{Merge}
+\label{sec:merge}
+
+\subsection{Split}
+\label{sec:split}
+
+\section{Laufzeitanalyse}
+\label{sec:runtime}
+
+\subsection{Hier}
+\label{sec:section1}
+
+\subsection{kommen noch}
+\label{sec:section2}
+
+\subsection{Subsections rein}
+\label{sec:section3}
+
+\chapter{Fazit}
+\label{sec:closing}
 
 \bibliographystyle{mybabalpha-fl}
 \bibliography{mybib}
