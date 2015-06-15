@@ -75,11 +75,35 @@ In \ref{sec:treaps} die Treaps als Lösung für diese Probleme dargestellt. Gena
 
 %TODO Laufzeitanalyse
 
+In \ref{sec:closing} wird ein Abschlussfazit gezogen, wobei noch einmal ein kurzer Vergleich zwischen Binärbäumen und Treaps gemacht wird. %TODO Und vielleicht noch mehr?
+
 \chapter{Motivation}
 \label{sec:motivation}
 
+In diesem Kapitel wird der Grundbau der gewünschten Datenstruktur beschrieben und es werden Probleme aufgezeigt, die später mit Treaps gelöst werden. Hauptsächlich geht es dabei um die Abhängigkeit der Laufzeiten bei Binärbäumen von der Höhe des Binärbaums und das Balancieren dieser Bäume.
+
 \section{Grundmotivation}
 \label{sec:motivationbasics}
+
+Wir betrachten dieses grundsätzliche Problem: Wir wollen eine Sammlung ${S_1, S_2, ...}$ an Mengen Items aufrechterhalten und bestimmte Methoden für Anfragen und Änderungen unterstützen. Jedes Item $i$ hat einen Schlüssel $k(i)$, wobei diese Schlüssel linear geordnet sind und jeder einzigartig ist. Die zu unterstützenden Methoden sind die folgenden:
+
+\begin{itemize}
+\item $MAKESET(S)$: Erschafft eine neue, leere Menge $S$.
+\item $INSERT(i, S)$: Fügt das Item $i$ in die Menge $S$ ein.
+\item $DELETE(k, S)$: Löscht das Item mit dem Schlüssel $k$ aus der Menge $S$.
+\item $FIND(k, S)$: Gibt das Item mit dem Schlüssel $k$ aus der Menge $S$ zurück.
+\item $JOIN(S_1, i, S_2)$: Ersetze die Mengen $S_1, S_2$ mit der neuen Menge $S = S_1 \cup {i} \cup S_2$, wobei:
+	\begin{itemize}
+	\item für alle Items $j \in S_1$ gilt: $k(j) > k(i)$
+	\item für alle Items $j \in S_2$ gilt: $k(j) < k(i)$
+	\end{itemize} 
+\item $PASTE(S_1, S_2)$: Ersetze die Mengen $S_1, S_2$ mit der neuen Menge $S = S_1 \cup S_2$, wobei für alle Items $i \in S_1$ und $j \in S_2$ gilt, dass $k(i) < k(j)$.
+\item $SPLIT (k, S)$: Ersetze die Menge $S$ durch die Mengen $S_1, S_2$, wobei gilt:
+	\begin{itemize}
+	\item $S_1 = \{j \in S | k(j) < k\}$
+	\item $S_2 = \{j \in S | k(j) > k\}$
+	\end{itemize}
+\end{itemize}
 
 \section{Laufzeiten bei binären Suchbäumen}
 \label{sec:binaryruntime}
