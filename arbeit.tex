@@ -51,14 +51,14 @@
 \subject{Seminararbeit} % Geben Sie die Art der Arbeit an
 \title{Randomisierte Datenstrukturen - Treaps} % Geben Sie hier den Titel Ihrer Arbeit an.
 \author{Moritz Beck, Robert McDaniel} % Geben Sie Ihren Namen an. 
-\date{Eingereicht am XX. YY 20ZZ} % Geben Sie das Abgabedatum an
+\date{Eingereicht am XX. YY 20ZZ} %TODO: Geben Sie das Abgabedatum an
 \titlehead{Julius-Maximilians-Universität Würzburg\\
 Institut für Informatik\\
 Lehrstuhl für Informatik I\\
 Effiziente Algorithmen und wissensbasierte Systeme}
 \publishers{Betreuer:\\
 Prof.\ Dr.\ Alexander Wolff\\
-Dipl.-Inf.\ Phillip Kindermann} % Geben Sie den Namen des weiteren Betreuers an.
+Dipl.-Inf.\ Philipp Kindermann} % Geben Sie den Namen des weiteren Betreuers an.
 \maketitle
 \tableofcontents
 
@@ -67,25 +67,34 @@ Dipl.-Inf.\ Phillip Kindermann} % Geben Sie den Namen des weiteren Betreuers an.
 \chapter{Einführung}
 \label{sec:intro}
 
-Treaps sind eine baumartige Datenstruktur, bei der das Sortieren der eingefügten Daten auf zwei Arten erfolgt: Zum Einen werden die Schlüssel wie in einem Binärbaum sortiert, und zum Anderen werden die Knoten durch eine Priorität wie in einem Heap sortiert. In dieser Arbeit wird insbesondere auf eine Implementierung von Treaps eingegangen, bei der die Priorität zufällig gewählt wird. Dies bringt einige Vorteile gegenüber anderen Baumarten, wie zum Beispiel eine hohe Wahrscheinlichkeit, einen balancierten Baum zu erhalten, was die Laufzeit von Operationen verbessert.
+Treaps sind eine baumartige Datenstruktur, bei der das Sortieren der eingefügten Daten auf zwei Arten erfolgt:
+Zum Einen werden die Schlüssel wie in einem Binärbaum sortiert, und zum Anderen werden die Knoten durch eine Priorität wie in einem Heap sortiert.
+In dieser Arbeit wird insbesondere auf eine Implementierung von Treaps eingegangen, bei der die Priorität zufällig gewählt wird.
+Dies bringt einige Vorteile gegenüber anderen Baumarten, wie zum Beispiel eine hohe Wahrscheinlichkeit, einen balancierten Baum zu erhalten, was die Laufzeit von Operationen verbessert.
 
-Im Laufe dieser Arbeit wird in \ref{sec:motivation} zuerst auf die Situation eingegangen, die zum Einsatz von Treaps führt. Genauer wird in \ref{sec:motivationbasics} der Aufbau der Datenstruktur, die wir erreichen wollen, erklärt, in \ref{sec:binaryruntime} die Laufzeiten der gewünschten Methoden bei binären Suchbäumen aufgezeigt, und bei \ref{sec:binaryproblems} auf die Probleme bei Binärbäumen eingegangen.
+Im Laufe dieser Arbeit wird in Abschnitt \ref{sec:motivation} zuerst auf die Situation eingegangen, die zum Einsatz von Treaps führt.
+Genauer wird in Abschnitt \ref{sec:motivationbasics} der Aufbau der Datenstruktur, die wir erreichen wollen, erklärt, in Abschnitt \ref{sec:binaryruntime} die Laufzeiten der gewünschten Methoden bei binären Suchbäumen aufgezeigt, und bei Abschnitt \ref{sec:binaryproblems} auf die Probleme bei Binärbäumen eingegangen.
 
-In \ref{sec:treaps} die Treaps als Lösung für diese Probleme dargestellt. Genauer werden in \ref{sec:treapsbasics} die Grundlagen für den Aufbau von Treaps aufgezeigt, in \ref{sec:uniquetreaps} die Existenz eines eindeutigen Treaps für eine gegebene Menge an Paaren von Schlüsseln und Prioritäten bewiesen, was zeigt, dass die Insert-Reihenfolge bei Treaps egal ist. In \ref{sec:implementing} werden die gewünschten Methoden implementiert und in Pseudocode beschrieben.
+In Abschnitt \ref{sec:treaps} werden Treaps als eine Lösung für diese Probleme dargestellt.
+Genauer werden in Abschnitt \ref{sec:treapsbasics} die Grundlagen für den Aufbau von Treaps aufgezeigt, in Abschnitt \ref{sec:uniquetreaps} die Existenz eines eindeutigen Treaps für eine gegebene Menge an Paaren von Schlüsseln und Prioritäten bewiesen, was zeigt, dass die Insert-Reihenfolge bei Treaps egal ist. In Abschnitt \ref{sec:implementing} werden die gewünschten Methoden implementiert und in Pseudocode beschrieben.
 
 %TODO Laufzeitanalyse
 
-In \ref{sec:closing} wird ein Abschlussfazit gezogen, wobei noch einmal ein kurzer Vergleich zwischen Binärbäumen und Treaps gemacht wird. %TODO Und vielleicht noch mehr?
+In Abschnitt \ref{sec:closing} wird ein Abschlussfazit gezogen, wobei noch einmal ein kurzer Vergleich zwischen Binärbäumen und Treaps gemacht wird. %TODO Und vielleicht noch mehr?
 
 \chapter{Motivation}
 \label{sec:motivation}
 
-In diesem Kapitel wird der Grundbau der gewünschten Datenstruktur beschrieben und es werden Probleme aufgezeigt, die später mit Treaps gelöst werden. Hauptsächlich geht es dabei um die Abhängigkeit der Laufzeiten bei Binärbäumen von der Höhe des Binärbaums und das Balancieren dieser Bäume.
+In diesem Kapitel wird der Grundbau der gewünschten Datenstruktur beschrieben und es werden Probleme aufgezeigt, die später mit Treaps gelöst werden.
+Hauptsächlich geht es dabei um die Abhängigkeit der Laufzeiten bei Binärbäumen von der Höhe des Binärbaums und das Balancieren dieser Bäume.
 
 \section{Grundmotivation}
 \label{sec:motivationbasics}
 
-Wir betrachten dieses grundsätzliche Problem: Wir wollen eine Sammlung ${S_1, S_2, ...}$ an Mengen Items aufrechterhalten und bestimmte Methoden für Anfragen und Änderungen unterstützen. Jedes Item $i$ hat einen Schlüssel $k(i)$, wobei diese Schlüssel linear geordnet sind und jeder einzigartig ist. Die zu unterstützenden Methoden sind die folgenden:
+Wir betrachten dieses grundsätzliche Problem:
+Wir wollen eine Sammlung ${S_1, S_2, ...}$ an Mengen Items aufrechterhalten und bestimmte Methoden für Anfragen und Änderungen unterstützen.
+Jedes Item $i$ hat einen Schlüssel $k(i)$, wobei diese Schlüssel linear geordnet sind und jeder einzigartig ist.
+Die zu unterstützenden Methoden sind die folgenden:
 
 \begin{itemize}
 \item $MAKESET(S)$: Erschafft eine neue, leere Menge $S$.
