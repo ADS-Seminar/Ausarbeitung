@@ -46,19 +46,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%% Bitte nur ab hier Änderungen vornehmen %%%%%%%%%%%%%%%%%%%%%
 
-%% hier Titel und Autorennamen eintragen
-
-\subject{Seminararbeit} % Geben Sie die Art der Arbeit an
-\title{Randomisierte Datenstrukturen - Treaps} % Geben Sie hier den Titel Ihrer Arbeit an.
-\author{Moritz Beck, Robert McDaniel} % Geben Sie Ihren Namen an. 
-\date{Eingereicht am XX. YY 20ZZ} %TODO: Geben Sie das Abgabedatum an
+\subject{Seminararbeit}
+\title{Randomisierte Datenstrukturen - Treaps}
+\author{Moritz Beck, Robert McDaniel}
+\date{Eingereicht am 24. 06 2015} %TODO? Gehe davon aus, dass wir das am Mittwoch abgeben
 \titlehead{Julius-Maximilians-Universität Würzburg\\
 Institut für Informatik\\
 Lehrstuhl für Informatik I\\
 Effiziente Algorithmen und wissensbasierte Systeme}
 \publishers{Betreuer:\\
 Prof.\ Dr.\ Alexander Wolff\\
-Dipl.-Inf.\ Philipp Kindermann} % Geben Sie den Namen des weiteren Betreuers an.
+Dipl.-Inf.\ Philipp Kindermann}
 \maketitle
 \tableofcontents
 
@@ -92,33 +90,66 @@ Hauptsächlich geht es dabei um die Abhängigkeit der Laufzeiten bei Binärbäum
 \label{sec:motivationbasics}
 
 Wir betrachten dieses grundsätzliche Problem:
-Wir wollen eine Sammlung ${S_1, S_2, ...}$ an Mengen Items aufrechterhalten und bestimmte Methoden für Anfragen und Änderungen unterstützen. %TODO: Das Deutsch? Was ist damit gemeint?
-Jedes Item $i$ hat einen Schlüssel $k(i)$, wobei diese Schlüssel linear geordnet sind und jeder einzigartig ist. %TODO: Item ist kein Deutsches Wort, benutze Element, Objekt o.Ä. "linear" geordnet?
+Wir wollen eine Menge ${S_1, S_2, ...}$ von Elementen verwalten und dabei bestimmte Methoden für Anfragen und Änderungen unterstützen.
+Jedes Element $i$ hat einen Schlüssel $k(i)$, wobei diese Schlüssel total geordnet sind und jeder einzigartig ist.
 Die zu unterstützenden Methoden sind die folgenden:
 
-\begin{itemize} %TODO: Methoden wie in den Folien
-\item MAKESET($S$): Erschafft eine neue, leere Menge $S$.
-\item INSERT($i, S$): Fügt das Item $i$ in die Menge $S$ ein.
-\item DELETE($k, S$): Löscht das Item mit dem Schlüssel $k$ aus der Menge $S$.
-\item FIND($k, S$): Gibt das Item mit dem Schlüssel $k$ aus der Menge $S$ zurück.
-\item JOIN($S_1, i, S_2$): Ersetze die Mengen $S_1, S_2$ mit der neuen Menge $S = S_1 \cup {i} \cup S_2$, wobei:
+\begin{itemize}
+\item $S$ = MakeSet(): Erschafft eine neue, leere Menge $S$.
+\item Insert($i, S$): Fügt das Item $i$ in die Menge $S$ ein.
+\item Delete($k, S$): Löscht das Item mit dem Schlüssel $k$ aus der Menge $S$.
+\item Find($k, S$): Gibt das Item mit dem Schlüssel $k$ aus der Menge $S$ zurück.
+\item $S$ = Join($S_1, i, S_2$): Ersetze die Mengen $S_1, S_2$ mit der neuen Menge $S = S_1 \cup {i} \cup S_2$, wobei:
 	\begin{itemize}
 	\item für alle Items $j \in S_1$ gilt: $k(j) > k(i)$
 	\item für alle Items $j \in S_2$ gilt: $k(j) < k(i)$
 	\end{itemize} 
-\item PASTE($S_1, S_2$): Ersetze die Mengen $S_1, S_2$ mit der neuen Menge $S = S_1 \cup S_2$, wobei für alle Items $i \in S_1$ und $j \in S_2$ gilt, dass $k(i) < k(j)$.
-\item SPLIT($k, S$): Ersetze die Menge $S$ durch die Mengen $S_1, S_2$, wobei gilt:
+\item $S$ = Merge($S_1, S_2$): Ersetze die Mengen $S_1, S_2$ mit der neuen Menge $S = S_1 \cup S_2$, wobei für alle Items $i \in S_1$ und $j \in S_2$ gilt, dass $k(i) < k(j)$.
+\item $S_1, S_2$ = Split($k, S$): Ersetze die Menge $S$ durch die Mengen $S_1, S_2$, wobei gilt:
 	\begin{itemize}
 	\item $S_1 = \{j \in S | k(j) < k\}$
 	\item $S_2 = \{j \in S | k(j) > k\}$
 	\end{itemize}
 \end{itemize}
 
-\section{Laufzeiten bei binären Suchbäumen}
-\label{sec:binaryruntime}
+Es steht nahe, zur Lösung dieses Problems die binären Suchbäume heranzuziehen, da diese die gestellten Voraussetzungen erfüllen.
+Es stellt sich jedoch heraus, dass sich bei binären Suchbäumen neue Probleme auftreten, die im nächsten Kapitel genauer erläutert werden.
 
 \section{Probleme bei binären Suchbäumen}
 \label{sec:binaryproblems}
+
+Um die Probleme zu sehen, die sich bei binären Suchbäumen anbahnen, müssen wir zuerst die Laufzeiten für die gewünschten Methoden anschauen. Bei dieser Tabelle drückt $h$ die Höhe des Baums aus, und $h_x$ drückt die Höhe von Baum $S_x$ aus.
+
+\begin{tabular}{l|c}
+	Methode & Laufzeit\\
+	\hline
+	$S$ = MakeSet() & $O(1)$\\
+	Insert$(i, S)$ & $O(h)$ \\
+	Delete$(k, S)$ & $O(h)$ \\
+	Find$(k, S)$ & $O(h)$ \\
+	$S$ = Join($S_1, i, S_2$) & $O(1)$ \\
+	$S$ = Merge($S_1, S_2$) & $O(h_1 + h_2)$ \\
+	$S_1, S_2$ = Split$(k, S)$ & $O(h)$
+\end{tabular}
+
+%TODO Tabelle schöner machen, Label einfügen, Tabelle richtig platzieren und so weiter - ich kenn mich mit dem Zeug nicht so aus
+
+Man sieht recht einfach, dass beim binären Suchbaum die Laufzeit vieler Methoden direkt von der Höhe des Baums abhängen. 
+Dies heißt, dass die amortisierte Laufzeit zwischen best-case und worst-case zwischen $O(log(n))$ und $O(n)$ schwankt.
+Da ein Zustand nahe dem worst-case leicht auftreten kann, liegt es nahe, den Suchbaum auf irgendeine Weise zu optimieren, ob es über die Reihenfolge der Insert-Operationen oder über reguläres Rotieren und Reorganisieren der Knoten erreicht wird. \par
+
+Eine vorherige Optimierung des Baums sieht nach einer guten Lösung für das Problem aus, es bringt jedoch andere, neue Probleme mit sich mit:
+Wenn die Datenstruktur die Optimierung übernehmen soll, führt das zu einer erhöhten Komplexität der Implementierung. 
+Die Methoden werden komplizierter, und es erhöht sich die Chance, dass sich Fehler darin einschleichen. 
+Weiterhin bringt eine kompliziertere Implementierung eine höhere Laufzeit, auch wenn es sich nicht direkt in der amortisierten Version niederschlägt - es müssen offensichtlich mehr Operationen ausgeführt werden, um den Baum balanciert zu halten. 
+Außerdem kann es notwendig sein, dass in der Implementierung zusätzliche Information gespeichert werden muss, die zum Balancieren benötigt wird. 
+Wenn ein geringer Verbrauch an Speicherplatz wichtig ist, kann dies ebenfalls ein großes Problem darstellen. \par
+
+Die Lösung für diese Probleme, die in dieser Arbeit näher dargestellt wird, ist Randomisierung.
+Sie ist einfach zu implementieren, schnell auszuführen und benötigt keine weitere Speicherung von Balancing-Informationen, wenn sie zum Beispiel durch Hash-Funktionen erreicht wird.
+Im nächsten Kapitel wird darauf eingegangen, wie eine Datenstruktur durch Einsatz von Randomisierung es sehr wahrscheinlich macht, dass der erstellte Baum zum best-case hin tendiert. 
+
+%TODO Passt das so? Vielleicht noch mehr? Keine Ahnung, wie viel der Rest noch wird
 
 \chapter{Treaps}
 \label{sec:treaps}
