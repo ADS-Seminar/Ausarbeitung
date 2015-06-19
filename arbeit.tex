@@ -131,6 +131,8 @@ Die zu unterstützenden Methoden sind die folgenden:
 
 \section{Implementierung}
 \label{sec:implementing}
+% TODO: erkläre Rotation: - erhält Suchbaumeigenschaft, verändert die Reihenfolge zweier Knoten bzgl. Priorität
+%       erkläre nach unten/oben rotieren (normalerweise ist die Definition Rechts-/Linksrotation)
 
 \subsection{Find}
 \label{sec:find}
@@ -152,14 +154,59 @@ Die zu unterstützenden Methoden sind die folgenden:
 
 \section{Laufzeitanalyse}
 \label{sec:runtime}
+Zur Laufzeitanalyse führen wir so genannte \emph{Mulmuley-Spiele} ein.
+Diese werden wir analysieren und dadurch die Tiefe von Knoten in einem Treap und die Anzahl der benötigten Rotationen beim Löschen berechnen.
+Das genügt, um die Laufzeit aller Operationen zu erhalten.
 
-\subsection{Hier}
-\label{sec:section1}
+\subsection{Mulmuley-Spiele}
+\label{sec:mulmuley}
+Für ein Mulmuley-Spiel werden folgende disjunkte Mengen definiert: % TODO: fordere, dass die Mengen nicht leer sind?
+\begin{itemize}
+    \item Eine Menge $P = \{P_1, P_2, \dots, P_p\}$ von $p$ \emph{Spielern},
+    \item eine Menge $S = \{S_1, S_2, \dots, S_s\}$ von $s$ \emph{Stoppern},
+    \item eine Menge $T = \{T_1, T_2, \dots, T_t\}$ von $t$ \emph{Triggern},
+    \item eine Menge $B = \{B_1, B_2, \dots, B_b\}$ von $b$ \emph{Zuschauern}.
+\end{itemize}
+Die Elemente aus $P \cup S$ seien aus einem total geordnetem Universum, und dabei sollen die Spieler kleiner sein als die Stopper.
+Die Mengen $T$ und $B$ können beliebig sein.
+Bilde eine Menge $X$, indem man mehrere dieser vier Mengen vereinigt und ziehe aus dieser zufällig Elemente ohne Zurücklegen.
+Man zählt dabei die Anzahl der Spieler, die größer sind als alle bisher gezogenen Spieler, wobei Stopper ebenfalls als Spieler gezählt werden.
+Der Wert eines Spieles entspricht dem erwarteten Wert für diese Anzahl und ist damit abhängig von der Kardinalität der einzelnen Mengen.
+In dieser Arbeit werden 3 Varianten der Mulmuley-Spiele vorgestellt:
+In Spiel A besteht die Menge $X$ aus den Spielern $P$ und den Zuschauern $B$.
+Gezogen wird solange die Menge $X$ nicht leer ist.
+In Spiel C besteht die Menge $X$ aus den Spielern $P$, den Stoppern $S$ und den Zuschauern $B$,
+Gezogen wird solange bis der erste Stopper gezogen wurde.
+In Spiel D besteht die Menge $X$ aus den Spielern $P$, den Triggern $T$ und den Zuschauern $B$.
+Gezogen wird solange die Menge $X$ nicht leer ist, allerdings fängt man erst mit dem Zählen an, wenn der erste Trigger gezogen wurde.
 
-\subsection{kommen noch}
-\label{sec:section2}
+Der Wert $A^p$ von Spiel A mit $p$ Spielern beträgt $H_p$. % TODO: \cite{...}
+Dabei ist $H_p := \sum_{i=1}^p 1/p$ die p-te harmonische Zahl und es gilt $H_p \in \Theta(\log p)$. % TODO? \cite{...}
+Der Wert $C_s^p$ von Spiel B mit $p$ Spielern und $s$ Stoppern beträgt $1 + H_{s+p} - H_s$.
+Der  Wert $D_t^p$ von Spiel C mit $p$ Spielern und $t$ Triggern beträgt $H_p + H_t - H_{t+p}$.
 
-\subsection{Subsections rein}
+\subsection{Laufzeit von Delete}
+\label{sec:delruntime}
+In diesem Unterabschnitt wird die Laufzeit einer Delete-Operation analysiert.
+Dies ist ausreichend, da Insert genau den umgekehrten Ablauf hat wie Delete (\glqq Delete rückwärts\grqq), deshalb die gleiche Laufzeit hat, und die restlichen Operationen mit Hilfe einer konstanten Anzahl von Insert und Delete implementiert werden können. % TODO: beweisen? verlinken?
+
+Die Ausführung von Delete besteht aus 2 Phasen:
+Zuerst wird der zu löschende Knoten im Treap gesucht, um dann in der zweiten Phase bis nach unten rotiert zu werden.
+Die Laufzeit der ersten Phase hängt linear von der Tiefe des gesuchten Knotens im Baum ab.
+Der Knoten wird in der zweiten Phase entlang des linken \emph{Grats} des rechten Teilbaums und des rechten Grats des linken Teilbaums nach unten rotiert.
+Der linke/rechte Grat eines Baums ist definiert als der Weg, den man erhält, wenn man von der Wurzel aus immer zum linken/rechten Kindknoten absteigt.
+Also ist die Laufzeit der zweiten Phase proportional zur Summe dieser beiden Grate.
+
+Sei $X$ die Menge aller Knoten in einem Treap.
+Sei $x$ ein Knoten mit Rang $r$, d.h. es gibt $r$ Knoten, deren Schlüssel nicht größer sind, als der von $x$.
+Sei $X_\leq$ die Menge aller $r$ Knoten mit Schlüssel kleiner oder gleich $k(x)$.
+Analog definiere $X_geq$.
+Zur Analyse beginnen wir mit einem leeren Treap und fügen seine Knoten nach absteigender Priorität ein.
+Dies ergibt, wie oben gezeigt, genau den zu analysierenden Treap, wobei Knoten immer nur als Blatt eingefügt werden und keine Rotationen erforderlich sind.
+
+
+
+\subsection{Subsections rein} % TODO
 \label{sec:section3}
 
 \chapter{Fazit}
