@@ -96,16 +96,16 @@ Die zu unterstützenden Methoden sind die folgenden:
 
 \begin{itemize}
 \item $S$ = MakeSet(): Erschafft eine neue, leere Menge $S$.
-\item Insert($i, S$): Fügt das Item $i$ in die Menge $S$ ein.
-\item Delete($k, S$): Löscht das Item mit dem Schlüssel $k$ aus der Menge $S$.
-\item Find($k, S$): Gibt das Item mit dem Schlüssel $k$ aus der Menge $S$ zurück.
-\item $S$ = Join($S_1, i, S_2$): Ersetze die Mengen $S_1, S_2$ mit der neuen Menge $S = S_1 \cup {i} \cup S_2$, wobei:
+\item Insert($i, S$): Fügt das Element $i$ in die Menge $S$ ein.
+\item Delete($k, S$): Löscht das Element mit dem Schlüssel $k$ aus der Menge $S$.
+\item Find($k, S$): Gibt das Element mit dem Schlüssel $k$ aus der Menge $S$ zurück.
+\item $S$ = Join($S_1, i, S_2$): Gib die Menge $S = S_1 \cup {i} \cup S_2$ zurück, wobei:
 	\begin{itemize}
-	\item für alle Items $j \in S_1$ gilt: $k(j) > k(i)$
-	\item für alle Items $j \in S_2$ gilt: $k(j) < k(i)$
+	\item für alle Elemente $j \in S_1$ gilt: $k(j) > k(i)$
+	\item für alle Elemente $j \in S_2$ gilt: $k(j) < k(i)$
 	\end{itemize} 
-\item $S$ = Merge($S_1, S_2$): Ersetze die Mengen $S_1, S_2$ mit der neuen Menge $S = S_1 \cup S_2$, wobei für alle Items $i \in S_1$ und $j \in S_2$ gilt, dass $k(i) < k(j)$.
-\item $S_1, S_2$ = Split($k, S$): Ersetze die Menge $S$ durch die Mengen $S_1, S_2$, wobei gilt:
+\item $S$ = Merge($S_1, S_2$): Gib die neue Menge $S = S_1 \cup S_2$ zurück, wobei für alle Elemente $i \in S_1$ und $j \in S_2$ gilt, dass $k(i) < k(j)$.
+\item $S_1, S_2$ = Split($k, S$): Gib die neuen Mengen $S_1, S_2$, wobei gilt:
 	\begin{itemize}
 	\item $S_1 = \{j \in S | k(j) < k\}$
 	\item $S_2 = \{j \in S | k(j) > k\}$
