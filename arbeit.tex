@@ -112,7 +112,7 @@ Die zu unterstützenden Methoden sind die folgenden:
 	\end{itemize}
 \end{itemize}
 
-Es steht nahe, zur Lösung dieses Problems die binären Suchbäume heranzuziehen, da diese die gestellten Voraussetzungen erfüllen.
+Es liegt nahe, zur Lösung dieses Problems die binären Suchbäume heranzuziehen, da diese die gestellten Voraussetzungen erfüllen.
 Es stellt sich jedoch heraus, dass sich bei binären Suchbäumen neue Probleme auftreten, die im nächsten Kapitel genauer erläutert werden.
 
 \section{Probleme bei binären Suchbäumen}
@@ -133,6 +133,7 @@ Um die Probleme zu sehen, die sich bei binären Suchbäumen anbahnen, müssen wi
 \end{tabular}
 
 %TODO Tabelle schöner machen, Label einfügen, Tabelle richtig platzieren und so weiter - ich kenn mich mit dem Zeug nicht so aus
+%   --> \begin{figure}label{tab:binarytree}\caption[Laufzeiten Binärbaum]{Laufzeiten Binärbaum (ausführlichere Beschreibung hier als Bildunterschrift möglich)} ... \end{figure}
 
 Man sieht recht einfach, dass beim binären Suchbaum die Laufzeit vieler Methoden direkt von der Höhe des Baums abhängen. 
 Dies heißt, dass die amortisierte Laufzeit zwischen best-case und worst-case zwischen $O(log(n))$ und $O(n)$ schwankt.
@@ -228,20 +229,27 @@ Der Knoten wird in der zweiten Phase entlang des linken \emph{Grats} des rechten
 Der linke/rechte Grat eines Baums ist definiert als der Weg, den man erhält, wenn man von der Wurzel aus immer zum linken/rechten Kindknoten absteigt.
 Also ist die Laufzeit der zweiten Phase proportional zur Summe dieser beiden Grate.
 
-Sei $X$ die Menge aller Knoten in einem Treap.
+Sei $X$ mit $\left|X\right| = n$ die Menge aller Knoten in einem Treap.
 Sei $x$ ein Knoten mit Rang $r$, d.h. es gibt $r$ Knoten, deren Schlüssel nicht größer sind, als der von $x$.
 Sei $X_\leq$ die Menge aller $r$ Knoten mit Schlüssel kleiner oder gleich $k(x)$.
-Analog definiere $X_geq$.
+Analog definiere $X_\geq$.
 Zur Analyse beginnen wir mit einem leeren Treap und fügen seine Knoten nach absteigender Priorität ein.
 Dies ergibt, wie oben gezeigt, genau den zu analysierenden Treap, wobei Knoten immer nur als Blatt eingefügt werden und keine Rotationen erforderlich sind.
-
-
-
-\subsection{Subsections rein} % TODO
-\label{sec:section3}
+Wie in Randomized Algorithms\cite{TODO} gezeigt, sind die Knoten aus $X_\leq$, die sich entlang des Suchpfades von $x$ befinden, genau die Knoten, die zu dem Zeitpunkt, in dem sie eingefügt werden, die größten aus $X_\leq$ sind.
+Möchte man die Anzahl dieser Knoten zählen, spielt man im Prinzip Spiel A mit $P = X_\leq$ und $B = X \setminus X_\leq$.
+Damit ergibt sich ein erwartete Anzahl von $H_{\left|P\right|} = H_r$.
+Betrachtet man auch die Knoten entlang des Suchpfades aus $X_\geq$, so ergibt sich aus Symmetriegründen eine erwartete Tiefe von $H_r + H_{n-r+1} - 1 \in O(\log n)$ für den Knoten $x$.
+% TODO: Bild einfügen
+Ähnlich kann man auch für die Anzahl der Rotationen argumentieren.
+Hierbei spielt man Spiel D mit $P = X_\leq \setminus \{x\}$, $T = \{x\}$ und $B = X \setminus X_\leq$, das den Erwartungswert $H_{r-1} + H_1 - H_r = 1 - 1/r$ hat.
+Für die Gesamtzahl der Rotationen ergibt sich damit erwartet $2 - 1/r - 1/(n-r+1) < 2$.
 
 \chapter{Fazit}
 \label{sec:closing}
+% Vorteil ggü naiver BT: Balancing -> Laufzeit, gerade, wenn Elemente in auf-/absteigender Reihenfolge eingefügt werden
+% Vorteil ggü det. balancierter BT: einfache Implementierung, keine weiteren Informationen/Speicher nötig -> Hashfunktion
+% Tabelle mit Laufzeitvergleich
+
 
 \bibliographystyle{mybabalpha-fl}
 \bibliography{mybib}
