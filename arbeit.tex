@@ -120,6 +120,9 @@ Es stellt sich jedoch heraus, dass sich bei binären Suchbäumen neue Probleme a
 
 Um die Probleme zu sehen, die sich bei binären Suchbäumen anbahnen, müssen wir zuerst die Laufzeiten für die gewünschten Methoden anschauen. Bei dieser Tabelle drückt $h$ die Höhe des Baums aus, und $h_x$ drückt die Höhe von Baum $S_x$ aus.
 
+\begin{figure}
+\centering
+\label{tab:binarytree}
 \begin{tabular}{l|c}
 	Methode & Laufzeit\\
 	\hline
@@ -131,9 +134,8 @@ Um die Probleme zu sehen, die sich bei binären Suchbäumen anbahnen, müssen wi
 	$S$ = Merge($S_1, S_2$) & $O(h_1 + h_2)$ \\
 	$S_1, S_2$ = Split$(k, S)$ & $O(h)$
 \end{tabular}
-
-%TODO Tabelle schöner machen, Label einfügen, Tabelle richtig platzieren und so weiter - ich kenn mich mit dem Zeug nicht so aus
-%   --> \begin{figure}label{tab:binarytree}\caption[Laufzeiten Binärbaum]{Laufzeiten Binärbaum (ausführlichere Beschreibung hier als Bildunterschrift möglich)} ... \end{figure}
+\caption[Laufzeiten Binärbaum]{Laufzeiten Binärbaum}
+\end{figure}
 
 Man sieht recht einfach, dass beim binären Suchbaum die Laufzeit vieler Methoden direkt von der Höhe des Baums abhängen. 
 Dies heißt, dass die amortisierte Laufzeit zwischen best-case und worst-case zwischen $O(log(n))$ und $O(n)$ schwankt.
@@ -155,11 +157,42 @@ Im nächsten Kapitel wird darauf eingegangen, wie eine Datenstruktur durch Einsa
 \chapter{Treaps}
 \label{sec:treaps}
 
+In diesem Kapitel werden die Treaps als Lösung für die vorher genannten Probleme eingeführt.
+Am Anfang werden die Treaps grundsätzlich definiert und es wird die Existenz eindeutiger Treaps bewiesen - eine wichtige Regel für ihre Funktionsweise.
+Danach wird die Implementierung der gewünschten Methoden beschrieben, und am Ende wird eine Laufzeitanalyse durchgeführt, um die Vorteile der Treaps zu zeigen.
+
 \section{Grundlagen}
 \label{sec:treapsbasics}
 
+Ein binärer Suchbaum ist ein binärer Baum, bei dem die Schlüssel auf der linken Seite kleiner als der der Wurzel sind, und die der rechten Seite größer als die der Wurzel sind.
+Ein (Max-)Heap ist eine Datenstruktur, bei der die Objekte total geordnet sind und die Schlüssel der Kinder eines beliebigen Knotens kleiner als die des Elternknotens sind.
+Wir benutzen beide Eigenschaften, kombinieren sie und erhalten daraus die Definition für Treaps: \par
+
+Man nehme einen Binärbaum, bei dem jeder Knoten zwei Zahlen enthält: Einen Schlüssel $k$ und eine Priorität $p$, wobei beide Zahlen aus einer total geordneten Menge stammen, und alle Schlüssel und Prioritäten einzigartig sind. Man erhält somit eine Menge $S = {(k_1, p_1), ... (k_n, p_n)}$, wobei $k_i$ der Schlüssel und $p_i$ die Priorität von Knoten $i$ sind. Dieser Baum wird ein \emph{Treap} genannt, wenn:
+
+\begin{itemize}
+\item Alle Schlüssel $k_i$ wie in einem binären Suchbaum sortiert sind
+\item Alle Prioritäten $p_i$ wie in einem (Max-)Heap sortiert sind
+\end{itemize}
+
+\begin{figure}
+\centering
+\label{img:exampletreap}
+\includegraphics{img/Beispiel_Treap.pdf}
+\caption{Beispiel eines Treaps - Schlüssel in rot, Priorität in blau}
+\end{figure}
+
+
 \section{Existenz eindeutiger Treaps}
 \label{sec:uniquetreaps}
+
+%TODO Theorem und Proof-Enviroments benutzen - die gehen irgendwie nicht
+
+Satz 1: Für jede Menge $S = \{(k_1,p_1), \dots, (k_n, p_n)\}$ von Schlüssel-Priorität-Paaren mit paarweise unterschiedlichen Schlüsseln und Prioritäten existiert genau ein gültiger Treap.\par
+
+Beweis: Es ist trivial, dass dieser Satz für $n = 0$ und $n = 1$ gilt. Betrachten wir jetzt $n \geq 2$, und nehmen an, dass $(k_1, p_1)$ die größte Priorität in $S$ hat. Wir konstruieren einen Treap, indem wir diesen ersten Knoten als die Wurzel für den Treap nehmen, den linken Teilbaum rekursiv aus den Knoten $j$ mit $k_j < k_1$ und den rechten Teilbaum rekursiv aus den Knoten $l$ mit $k_l > k_1$. Es ist weiterhin einfach zu sehen, dass jeder Treap für die Menge $S$ auf diese Weise zusammengesetzt wird. QED. \par
+
+Dieser Satz zeigt, dass die Reihenfolge, in der die Knoten eingefügt werden, beliebig sein kann - am Ende kommt immer der gleiche Treap heraus. Wenn wir den Baum optimal für eine gegebene Menge an Schlüsseln balancieren wollen, ist es wichtig, die Prioritäten richtig zu wählen. Hier kommt die Randomisierung ins Spiel: Dadurch, dass komplett zufällig gewählte Prioritäten in Richtung einer gleichmäßigen Verteilung tendieren, sind sie ideal für Treaps - sie sind gleichmäßig und schnell zu erstellen (zum Beispiel durch eine Hashfunktion).
 
 \section{Implementierung}
 \label{sec:implementing}
