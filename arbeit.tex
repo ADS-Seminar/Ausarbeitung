@@ -120,7 +120,7 @@ Es stellt sich jedoch heraus, dass sich bei binären Suchbäumen neue Probleme a
 
 Um die Probleme zu sehen, die sich bei binären Suchbäumen anbahnen, müssen wir zuerst die Laufzeiten für die gewünschten Methoden anschauen. Bei dieser Tabelle drückt $h$ die Höhe des Baums aus, und $h_x$ drückt die Höhe von Baum $S_x$ aus.
 
-\begin{figure}
+\begin{table}
 \centering
 \label{tab:binarytree}
 \begin{tabular}{l|c}
@@ -134,8 +134,8 @@ Um die Probleme zu sehen, die sich bei binären Suchbäumen anbahnen, müssen wi
 	$S$ = Merge($S_1, S_2$) & $O(h_1 + h_2)$ \\
 	$S_1, S_2$ = Split$(k, S)$ & $O(h)$
 \end{tabular}
-\caption[Laufzeiten Binärbaum]{Laufzeiten Binärbaum}
-\end{figure}
+\caption[Laufzeiten Binärbaum]{Laufzeiten bei der einfachen Implementierung von binären Suchbäumen.} % TODO: evtl noch Erläuterung der Variablen h, h_1 und h_2
+\end{table}
 
 Man sieht recht einfach, dass beim binären Suchbaum die Laufzeit vieler Methoden direkt von der Höhe des Baums abhängen. 
 Dies heißt, dass die amortisierte Laufzeit zwischen best-case und worst-case zwischen $O(log(n))$ und $O(n)$ schwankt.
@@ -166,7 +166,7 @@ Danach wird die Implementierung der gewünschten Methoden beschrieben, und am En
 
 Ein binärer Suchbaum ist ein binärer Baum, bei dem die Schlüssel auf der linken Seite kleiner als der der Wurzel sind, und die der rechten Seite größer als die der Wurzel sind.
 Ein (Max-)Heap ist eine Datenstruktur, bei der die Objekte total geordnet sind und die Schlüssel der Kinder eines beliebigen Knotens kleiner als die des Elternknotens sind.
-Wir benutzen beide Eigenschaften, kombinieren sie und erhalten daraus die Definition für Treaps: \par
+Wir benutzen beide Eigenschaften, kombinieren sie und erhalten daraus die Definition für Treaps:
 
 Man nehme einen Binärbaum, bei dem jeder Knoten zwei Zahlen enthält: Einen Schlüssel $k$ und eine Priorität $p$, wobei beide Zahlen aus einer total geordneten Menge stammen, und alle Schlüssel und Prioritäten einzigartig sind. Man erhält somit eine Menge $S = {(k_1, p_1), ... (k_n, p_n)}$, wobei $k_i$ der Schlüssel und $p_i$ die Priorität von Knoten $i$ sind. Dieser Baum wird ein \emph{Treap} genannt, wenn:
 
@@ -188,9 +188,12 @@ Man nehme einen Binärbaum, bei dem jeder Knoten zwei Zahlen enthält: Einen Sch
 
 %TODO Theorem und Proof-Enviroments benutzen - die gehen irgendwie nicht
 
-Satz 1: Für jede Menge $S = \{(k_1,p_1), \dots, (k_n, p_n)\}$ von Schlüssel-Priorität-Paaren mit paarweise unterschiedlichen Schlüsseln und Prioritäten existiert genau ein gültiger Treap.\par
-
-Beweis: Es ist trivial, dass dieser Satz für $n = 0$ und $n = 1$ gilt. Betrachten wir jetzt $n \geq 2$, und nehmen an, dass $(k_1, p_1)$ die größte Priorität in $S$ hat. Wir konstruieren einen Treap, indem wir diesen ersten Knoten als die Wurzel für den Treap nehmen, den linken Teilbaum rekursiv aus den Knoten $j$ mit $k_j < k_1$ und den rechten Teilbaum rekursiv aus den Knoten $l$ mit $k_l > k_1$. Es ist weiterhin einfach zu sehen, dass jeder Treap für die Menge $S$ auf diese Weise zusammengesetzt wird. QED. \par
+\begin{satz}
+Für jede Menge $S = \{(k_1,p_1), \dots, (k_n, p_n)\}$ von Schlüssel-Priorität-Paaren mit paarweise unterschiedlichen Schlüsseln und Prioritäten existiert genau ein gültiger Treap.
+\end{satz}
+\begin{beweis}
+Es ist trivial, dass dieser Satz für $n = 0$ und $n = 1$ gilt. Betrachten wir jetzt $n \geq 2$, und nehmen an, dass $(k_1, p_1)$ die größte Priorität in $S$ hat. Wir konstruieren einen Treap, indem wir diesen ersten Knoten als die Wurzel für den Treap nehmen, den linken Teilbaum rekursiv aus den Knoten $j$ mit $k_j < k_1$ und den rechten Teilbaum rekursiv aus den Knoten $l$ mit $k_l > k_1$. Es ist weiterhin einfach zu sehen, dass jeder Treap für die Menge $S$ auf diese Weise zusammengesetzt wird.
+\end{beweis}
 
 Dieser Satz zeigt, dass die Reihenfolge, in der die Knoten eingefügt werden, beliebig sein kann - am Ende kommt immer der gleiche Treap heraus. Wenn wir den Baum optimal für eine gegebene Menge an Schlüsseln balancieren wollen, ist es wichtig, die Prioritäten richtig zu wählen. Hier kommt die Randomisierung ins Spiel: Dadurch, dass komplett zufällig gewählte Prioritäten in Richtung einer gleichmäßigen Verteilung tendieren, sind sie ideal für Treaps - sie sind gleichmäßig und schnell zu erstellen (zum Beispiel durch eine Hashfunktion).
 
@@ -282,6 +285,35 @@ Für die Gesamtzahl der Rotationen ergibt sich damit erwartet $2 - 1/r - 1/(n-r+
 % Vorteil ggü naiver BT: Balancing -> Laufzeit, gerade, wenn Elemente in auf-/absteigender Reihenfolge eingefügt werden
 % Vorteil ggü det. balancierter BT: einfache Implementierung, keine weiteren Informationen/Speicher nötig -> Hashfunktion
 % Tabelle mit Laufzeitvergleich
+Die in dieser Arbeit vorgestellten Treaps stellen eine gute Option zum Verwalten geordneter Mengen dar.
+Gegenüber einfachen binären Suchbäumen haben Treaps den Vorteil, dass sie balanciert werden, was insbesondere dann eine Rolle spielt, wenn Elemente häufig in auf-/absteigender Folge eingefügt werden.
+Gegenüber anderen (deterministischen) balancierten Suchbäumen haben Treaps den Vorteil, dass die Implementierung einfach ist.
+Außerdem ist es möglich, keinen zusätzlichen Speicherplatz für Balancierungsinformationen zu verwenden, wenn man statt explizite Prioritäten anzugeben auf eine Hashfunktion setzt.
+%TODO Nachteil?
+Allerdings ist die schnelle Laufzeit bei Treaps nicht garantiert, sondern nur sehr unwahrscheinlich, da es sich um einen Erwartungswert handelt.
+Abschließend sei hier nochmal der direkte Vergleich der Laufzeiten dargestellt:
+
+\vspace{1em}
+% \begin{table}
+% \centering
+% \label{tab:treapvsbinarytree}
+\begin{tabular}{l | c | c }
+        Methode & Treap & Binärbaum\\
+        \hline
+        Insert$(i, S)$ & $O(\log n)$ & $O(h)$ \\
+        Delete$(k, S)$ & $O(\log n)$ & $O(h)$ \\
+        Find$(k, S)$ & $O(\log n)$ & $O(h)$ \\
+        $S$ = Join($S_1, i, S_2$) & $O(\log n + \log m)$ & $O(1)$ \\
+        $S$ = Merge($S_1, S_2$) & $O(\log n + \log m)$ & $O(h_1 + h_2)$ \\
+        $S_1, S_2$ = Split$(k, S)$ & $O(\log n + \log m)$ & $O(h)$
+        \end{tabular}
+% \caption[Laufzeiten Treap vs. Binärbaum]{Laufzeitvergleich zwischen Treaps (Erwartungswert) und binären Suchbäumen (worst case).} % TODO: evtl noch Erläuterung der Variablen h, h_1 und h_2, n, m
+% \end{table}
+
+Die Variablen $n$ bzw.\ $m$ stehen hierbei für die Anzahl der Elemente in den jeweiligen Treaps; die Variablen $h$, $h_1$ und $h_2$ geben die Höhe des Binärbaums an.
+
+
+
 
 
 \bibliographystyle{mybabalpha-fl}
