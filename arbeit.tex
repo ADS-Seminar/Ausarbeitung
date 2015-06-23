@@ -71,7 +71,7 @@ In dieser Arbeit wird insbesondere auf eine Implementierung von Treaps eingegang
 Dies bringt einige Vorteile gegenüber anderen Baumarten, wie zum Beispiel eine hohe Wahrscheinlichkeit, einen balancierten Baum zu erhalten, was die Laufzeit von Operationen verbessert.
 
 Im Laufe dieser Arbeit wird in Abschnitt \ref{sec:motivation} zuerst auf die Situation eingegangen, die zum Einsatz von Treaps führt.
-Genauer wird in Abschnitt \ref{sec:motivationbasics} der Aufbau der Datenstruktur, die wir erreichen wollen, erklärt, in Abschnitt \ref{sec:binaryruntime} die Laufzeiten der gewünschten Methoden bei binären Suchbäumen aufgezeigt, und bei Abschnitt \ref{sec:binaryproblems} auf die Probleme bei Binärbäumen eingegangen.
+Genauer wird in Abschnitt \ref{sec:motivationbasics} der Aufbau der Datenstruktur, die wir erreichen wollen, erklärt, und in Abschnitt \ref{sec:binaryproblems} die Laufzeiten der gewünschten Methoden bei binären Suchbäumen aufgezeigt und auf die Probleme bei Binärbäumen eingegangen.
 
 In Abschnitt \ref{sec:treaps} werden Treaps als eine Lösung für diese Probleme dargestellt.
 Genauer werden in Abschnitt \ref{sec:treapsbasics} die Grundlagen für den Aufbau von Treaps aufgezeigt, in Abschnitt \ref{sec:uniquetreaps} die Existenz eines eindeutigen Treaps für eine gegebene Menge an Paaren von Schlüsseln und Prioritäten bewiesen, was zeigt, dass die Insert-Reihenfolge bei Treaps egal ist. In Abschnitt \ref{sec:implementing} werden die gewünschten Methoden implementiert und in Pseudocode beschrieben.
@@ -118,7 +118,7 @@ Es stellt sich jedoch heraus, dass sich bei binären Suchbäumen neue Probleme a
 \section{Probleme bei binären Suchbäumen}
 \label{sec:binaryproblems}
 
-Um die Probleme zu sehen, die sich bei binären Suchbäumen anbahnen, müssen wir zuerst die Laufzeiten für die gewünschten Methoden anschauen. Bei dieser Tabelle drückt $h$ die Höhe des Baums aus, und $h_x$ drückt die Höhe von Baum $S_x$ aus.
+Um die Probleme zu sehen, die sich bei binären Suchbäumen anbahnen, müssen wir zuerst die Laufzeiten für die gewünschten Methoden anschauen. In Tabelle \ref{tab:binarytree} drückt $h$ die Höhe des Baums aus, und $h_x$ drückt die Höhe von Baum $S_x$ aus.
 
 \begin{table}
 \centering
@@ -139,17 +139,17 @@ Um die Probleme zu sehen, die sich bei binären Suchbäumen anbahnen, müssen wi
 
 Man sieht recht einfach, dass beim binären Suchbaum die Laufzeit vieler Methoden direkt von der Höhe des Baums abhängen. 
 Dies heißt, dass die amortisierte Laufzeit zwischen best-case und worst-case zwischen $O(log(n))$ und $O(n)$ schwankt.
-Da ein Zustand nahe dem worst-case leicht auftreten kann, liegt es nahe, den Suchbaum auf irgendeine Weise zu optimieren, ob es über die Reihenfolge der Insert-Operationen oder über reguläres Rotieren und Reorganisieren der Knoten erreicht wird. \par
+Da ein Zustand nahe dem worst-case leicht auftreten kann, liegt es nahe, den Suchbaum auf irgendeine Weise zu optimieren, ob es über die Reihenfolge der Insert-Operationen oder über reguläres Rotieren und Reorganisieren der Knoten erreicht wird.
 
 Eine vorherige Optimierung des Baums sieht nach einer guten Lösung für das Problem aus, es bringt jedoch andere, neue Probleme mit sich mit:
 Wenn die Datenstruktur die Optimierung übernehmen soll, führt das zu einer erhöhten Komplexität der Implementierung. 
 Die Methoden werden komplizierter, und es erhöht sich die Chance, dass sich Fehler darin einschleichen. 
-Weiterhin bringt eine kompliziertere Implementierung eine höhere Laufzeit, auch wenn es sich nicht direkt in der amortisierten Version niederschlägt - es müssen offensichtlich mehr Operationen ausgeführt werden, um den Baum balanciert zu halten. 
+Weiterhin bringt eine kompliziertere Implementierung eine höhere Laufzeit, auch wenn es sich nicht direkt in der amortisierten Version niederschlägt -- es müssen offensichtlich mehr Operationen ausgeführt werden, um den Baum balanciert zu halten. 
 Außerdem kann es notwendig sein, dass in der Implementierung zusätzliche Information gespeichert werden muss, die zum Balancieren benötigt wird. 
-Wenn ein geringer Verbrauch an Speicherplatz wichtig ist, kann dies ebenfalls ein großes Problem darstellen. \par
+Wenn ein geringer Verbrauch an Speicherplatz wichtig ist, kann dies ebenfalls ein großes Problem darstellen.
 
 Die Lösung für diese Probleme, die in dieser Arbeit näher dargestellt wird, ist Randomisierung.
-Sie ist einfach zu implementieren, schnell auszuführen und benötigt keine weitere Speicherung von Balancing-Informationen, wenn sie zum Beispiel durch Hash-Funktionen erreicht wird.
+Sie ist einfach zu implementieren, schnell auszuführen und benötigt keine weitere Speicherung von Balancierungs-Informationen, wenn sie zum Beispiel durch Hash-Funktionen erreicht wird.
 Im nächsten Kapitel wird darauf eingegangen, wie eine Datenstruktur durch Einsatz von Randomisierung es sehr wahrscheinlich macht, dass der erstellte Baum zum best-case hin tendiert. 
 
 %TODO Passt das so? Vielleicht noch mehr? Keine Ahnung, wie viel der Rest noch wird
@@ -158,7 +158,7 @@ Im nächsten Kapitel wird darauf eingegangen, wie eine Datenstruktur durch Einsa
 \label{sec:treaps}
 
 In diesem Kapitel werden die Treaps als Lösung für die vorher genannten Probleme eingeführt.
-Am Anfang werden die Treaps grundsätzlich definiert und es wird die Existenz eindeutiger Treaps bewiesen - eine wichtige Regel für ihre Funktionsweise.
+Am Anfang werden die Treaps grundsätzlich definiert und es wird die Existenz eindeutiger Treaps bewiesen -- eine wichtige Regel für ihre Funktionsweise.
 Danach wird die Implementierung der gewünschten Methoden beschrieben, und am Ende wird eine Laufzeitanalyse durchgeführt, um die Vorteile der Treaps zu zeigen.
 
 \section{Grundlagen}
@@ -186,8 +186,6 @@ Man nehme einen Binärbaum, bei dem jeder Knoten zwei Zahlen enthält: Einen Sch
 \section{Existenz eindeutiger Treaps}
 \label{sec:uniquetreaps}
 
-%TODO Theorem und Proof-Enviroments benutzen - die gehen irgendwie nicht
-
 \begin{satz}
 Für jede Menge $S = \{(k_1,p_1), \dots, (k_n, p_n)\}$ von Schlüssel-Priorität-Paaren mit paarweise unterschiedlichen Schlüsseln und Prioritäten existiert genau ein gültiger Treap.
 \end{satz}
@@ -195,7 +193,7 @@ Für jede Menge $S = \{(k_1,p_1), \dots, (k_n, p_n)\}$ von Schlüssel-Priorität
 Es ist trivial, dass dieser Satz für $n = 0$ und $n = 1$ gilt. Betrachten wir jetzt $n \geq 2$, und nehmen an, dass $(k_1, p_1)$ die größte Priorität in $S$ hat. Wir konstruieren einen Treap, indem wir diesen ersten Knoten als die Wurzel für den Treap nehmen, den linken Teilbaum rekursiv aus den Knoten $j$ mit $k_j < k_1$ und den rechten Teilbaum rekursiv aus den Knoten $l$ mit $k_l > k_1$. Es ist weiterhin einfach zu sehen, dass jeder Treap für die Menge $S$ auf diese Weise zusammengesetzt wird.
 \end{beweis}
 
-Dieser Satz zeigt, dass die Reihenfolge, in der die Knoten eingefügt werden, beliebig sein kann - am Ende kommt immer der gleiche Treap heraus. Wenn wir den Baum optimal für eine gegebene Menge an Schlüsseln balancieren wollen, ist es wichtig, die Prioritäten richtig zu wählen. Hier kommt die Randomisierung ins Spiel: Dadurch, dass komplett zufällig gewählte Prioritäten in Richtung einer gleichmäßigen Verteilung tendieren, sind sie ideal für Treaps - sie sind gleichmäßig und schnell zu erstellen (zum Beispiel durch eine Hashfunktion).
+Dieser Satz zeigt, dass die Reihenfolge, in der die Knoten eingefügt werden, beliebig sein kann -- am Ende kommt immer der gleiche Treap heraus. Wenn wir den Baum optimal für eine gegebene Menge an Schlüsseln balancieren wollen, ist es wichtig, die Prioritäten richtig zu wählen. Hier kommt die Randomisierung ins Spiel: Dadurch, dass komplett zufällig gewählte Prioritäten in Richtung einer gleichmäßigen Verteilung tendieren, sind sie ideal für Treaps -- sie sind gleichmäßig und schnell zu erstellen (zum Beispiel durch eine Hashfunktion).
 
 \section{Implementierung}
 \label{sec:implementing}
