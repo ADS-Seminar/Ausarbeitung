@@ -103,7 +103,7 @@ Die zu unterstützenden Methoden sind die folgenden:
 	\begin{itemize}
 	\item für alle Elemente $j \in S_1$ gilt: $k(j) > k(i)$
 	\item für alle Elemente $j \in S_2$ gilt: $k(j) < k(i)$
-	\end{itemize} 
+	\end{itemize}
 \item $S$ = Merge($S_1, S_2$): Gib die neue Menge $S = S_1 \cup S_2$ zurück, wobei für alle Elemente $i \in S_1$ und $j \in S_2$ gilt, dass $k(i) < k(j)$.
 \item $S_1, S_2$ = Split($k, S$): Gib die neuen Mengen $S_1, S_2$, wobei gilt:
 	\begin{itemize}
@@ -118,11 +118,10 @@ Es stellt sich jedoch heraus, dass sich bei binären Suchbäumen neue Probleme a
 \section{Probleme bei binären Suchbäumen}
 \label{sec:binaryproblems}
 
-Um die Probleme zu sehen, die sich bei binären Suchbäumen anbahnen, müssen wir zuerst die Laufzeiten für die gewünschten Methoden anschauen. In Tabelle \ref{tab:binarytree} drückt $h$ die Höhe des Baums aus, und $h_x$ drückt die Höhe von Baum $S_x$ aus.
+Um die Probleme zu sehen, die sich bei binären Suchbäumen anbahnen, müssen wir zuerst die Laufzeiten für die gewünschten Methoden anschauen. Bei dieser Tabelle\ref{tab:binarytree} drückt $h$ die Höhe des Baums aus, und $h_x$ drückt die Höhe von Baum $S_x$ aus.
 
 \begin{table}
 \centering
-\label{tab:binarytree}
 \begin{tabular}{l|c}
 	Methode & Laufzeit\\
 	\hline
@@ -135,22 +134,23 @@ Um die Probleme zu sehen, die sich bei binären Suchbäumen anbahnen, müssen wi
 	$S_1, S_2$ = Split$(k, S)$ & $O(h)$
 \end{tabular}
 \caption[Laufzeiten Binärbaum]{Laufzeiten bei der einfachen Implementierung von binären Suchbäumen.} % TODO: evtl noch Erläuterung der Variablen h, h_1 und h_2
+\label{tab:binarytree}
 \end{table}
 
-Man sieht recht einfach, dass beim binären Suchbaum die Laufzeit vieler Methoden direkt von der Höhe des Baums abhängen. 
+Man sieht recht einfach, dass beim binären Suchbaum die Laufzeit vieler Methoden direkt von der Höhe des Baums abhängen.
 Dies heißt, dass die amortisierte Laufzeit zwischen best-case und worst-case zwischen $O(log(n))$ und $O(n)$ schwankt.
 Da ein Zustand nahe dem worst-case leicht auftreten kann, liegt es nahe, den Suchbaum auf irgendeine Weise zu optimieren, ob es über die Reihenfolge der Insert-Operationen oder über reguläres Rotieren und Reorganisieren der Knoten erreicht wird.
 
 Eine vorherige Optimierung des Baums sieht nach einer guten Lösung für das Problem aus, es bringt jedoch andere, neue Probleme mit sich mit:
-Wenn die Datenstruktur die Optimierung übernehmen soll, führt das zu einer erhöhten Komplexität der Implementierung. 
-Die Methoden werden komplizierter, und es erhöht sich die Chance, dass sich Fehler darin einschleichen. 
-Weiterhin bringt eine kompliziertere Implementierung eine höhere Laufzeit, auch wenn es sich nicht direkt in der amortisierten Version niederschlägt -- es müssen offensichtlich mehr Operationen ausgeführt werden, um den Baum balanciert zu halten. 
-Außerdem kann es notwendig sein, dass in der Implementierung zusätzliche Information gespeichert werden muss, die zum Balancieren benötigt wird. 
+Wenn die Datenstruktur die Optimierung übernehmen soll, führt das zu einer erhöhten Komplexität der Implementierung.
+Die Methoden werden komplizierter, und es erhöht sich die Chance, dass sich Fehler darin einschleichen.
+Weiterhin bringt eine kompliziertere Implementierung eine höhere Laufzeit, auch wenn es sich nicht direkt in der amortisierten Version niederschlägt -- es müssen offensichtlich mehr Operationen ausgeführt werden, um den Baum balanciert zu halten.
+Außerdem kann es notwendig sein, dass in der Implementierung zusätzliche Information gespeichert werden muss, die zum Balancieren benötigt wird.
 Wenn ein geringer Verbrauch an Speicherplatz wichtig ist, kann dies ebenfalls ein großes Problem darstellen.
 
 Die Lösung für diese Probleme, die in dieser Arbeit näher dargestellt wird, ist Randomisierung.
 Sie ist einfach zu implementieren, schnell auszuführen und benötigt keine weitere Speicherung von Balancierungs-Informationen, wenn sie zum Beispiel durch Hash-Funktionen erreicht wird.
-Im nächsten Kapitel wird darauf eingegangen, wie eine Datenstruktur durch Einsatz von Randomisierung es sehr wahrscheinlich macht, dass der erstellte Baum zum best-case hin tendiert. 
+Im nächsten Kapitel wird darauf eingegangen, wie eine Datenstruktur durch Einsatz von Randomisierung es sehr wahrscheinlich macht, dass der erstellte Baum zum best-case hin tendiert.
 
 %TODO Passt das so? Vielleicht noch mehr? Keine Ahnung, wie viel der Rest noch wird
 
