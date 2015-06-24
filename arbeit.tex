@@ -49,7 +49,7 @@
 \subject{Seminararbeit}
 \title{Randomisierte Datenstrukturen - Treaps}
 \author{Moritz Beck, Robert McDaniel}
-\date{Eingereicht am 24.06.2015}
+\date{Eingereicht am 25.06.2015}
 \titlehead{Julius-Maximilians-Universität Würzburg\\
 Institut für Informatik\\
 Lehrstuhl für Informatik I\\
@@ -74,9 +74,7 @@ Im Laufe dieser Arbeit wird in Abschnitt \ref{sec:motivation} zuerst auf die Sit
 Genauer wird in Abschnitt \ref{sec:motivationbasics} der Aufbau der Datenstruktur, die wir erreichen wollen, erklärt, und in Abschnitt \ref{sec:binaryproblems} die Laufzeiten der gewünschten Methoden bei binären Suchbäumen aufgezeigt und auf die Probleme bei Binärbäumen eingegangen.
 
 In Abschnitt \ref{sec:treaps} werden Treaps als eine Lösung für diese Probleme dargestellt.
-Genauer werden in Abschnitt \ref{sec:treapsbasics} die Grundlagen für den Aufbau von Treaps aufgezeigt, in Abschnitt \ref{sec:uniquetreaps} die Existenz eines eindeutigen Treaps für eine gegebene Menge an Paaren von Schlüsseln und Prioritäten bewiesen, was zeigt, dass die Insert-Reihenfolge bei Treaps egal ist. In Abschnitt \ref{sec:implementing} werden die gewünschten Methoden implementiert und in Pseudocode beschrieben.
-
-%TODO Laufzeitanalyse
+Genauer werden in Abschnitt \ref{sec:treapsbasics} die Grundlagen für den Aufbau von Treaps aufgezeigt, in Abschnitt \ref{sec:uniquetreaps} die Existenz eines eindeutigen Treaps für eine gegebene Menge an Paaren von Schlüsseln und Prioritäten bewiesen, was zeigt, dass die Insert-Reihenfolge bei Treaps egal ist. In Abschnitt \ref{sec:implementing} werden die gewünschten Methoden implementiert und in Pseudocode beschrieben. In Abschnitt \ref{sec:runtime} wird eine Laufzeitanalyse für die implementierten Methoden gemacht, deren Beweis auf sogenannten Mulmuley-Spielen beruht, die vorher definiert werden.
 
 In Abschnitt \ref{sec:closing} wird ein Abschlussfazit gezogen, wobei noch einmal ein kurzer Vergleich zwischen Binärbäumen und Treaps gemacht wird.
 
@@ -133,7 +131,7 @@ Um die Probleme zu sehen, die sich bei binären Suchbäumen anbahnen, müssen wi
 	$S$ = Merge($S_1, S_2$) & $O(h_1 + h_2)$ \\
 	$S_1, S_2$ = Split$(k, S)$ & $O(h)$
 \end{tabular}
-\caption[Laufzeiten Binärbaum]{Laufzeiten bei der einfachen Implementierung von binären Suchbäumen.} % TODO: evtl noch Erläuterung der Variablen h, h_1 und h_2
+\caption[Laufzeiten Binärbaum]{Laufzeiten bei der einfachen Implementierung von binären Suchbäumen.}
 \label{tab:binarytree}
 \end{table}
 
@@ -376,7 +374,7 @@ Abschließend sei hier nochmal der direkte Vergleich der Laufzeiten dargestellt:
         $S$ = Merge($S_1, S_2$) & $O(\log n + \log m)$ & $O(h_1 + h_2)$ \\
         $S_1, S_2$ = Split$(k, S)$ & $O(\log n + \log m)$ & $O(h)$
         \end{tabular}
-% \caption[Laufzeiten Treap vs. Binärbaum]{Laufzeitvergleich zwischen Treaps (Erwartungswert) und binären Suchbäumen (worst case).} % TODO: evtl noch Erläuterung der Variablen h, h_1 und h_2, n, m
+% \caption[Laufzeiten Treap vs. Binärbaum]{Laufzeitvergleich zwischen Treaps (Erwartungswert) und binären Suchbäumen (worst case).}
 % \end{table}
 
 Die Variablen $n$ bzw.\ $m$ stehen hierbei für die Anzahl der Elemente in den jeweiligen Treaps; die Variablen $h$, $h_1$ und $h_2$ geben die Höhe des Binärbaums an.
