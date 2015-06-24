@@ -209,11 +209,19 @@ Man kann die Prioritäten effizient beim Einfügen eines Knotens durch einen Zuf
 \label{sec:implementing}
 % TODO: erkläre Rotation: - erhält Suchbaumeigenschaft, verändert die Reihenfolge zweier Knoten bzgl. Priorität
 %       erkläre nach unten/oben rotieren (normalerweise ist die Definition Rechts-/Linksrotation)
-
-In diesem Kapitel wird das Prinzip der Rotation bei Treaps genauer erläutert und es werden die vorher definierten, gewünschten Methoden in Pseudocode implementiert.
-
 \subsection{Rotation}
 \label{sec:rotation}
+Bei den Update-Operationen werden Baumrotationen benutzt, um Knoten im Treap zu verschieben.
+Dabei wird die Suchbaumeigenschaft beibehalten, während die relative Position zweier Knoten bezüglich der Prioritäten vertauscht wird.
+Dazu muss darauf geachtet werden, dass man immer nur in Richtung des nach Priorität kleineren Kindknotens rotiert wird, sonst wird ein ganzer Teilbaum falsch positioniert.
+In den folgenden Algorithmen wird verwendet, dass Knoten nach oben oder unten rotiert werden.
+Dies bedeuted, dass der Baum so rotiert wird, dass sich der entsprechende Knoten nachher über seinem Elternknoten bzw. unter einem seiner Kindknoten befindet.
+Beispielsweise wird der rote Knoten in Abbildung~\ref{fig:rotation} durch eine Rechtsrotation um sich nach unten rotiert und durch eine Linksrotation um den blauen Knoten nach oben rotiert.
+\begin{figure}
+\includegraphics{img/Tree_Rotation_color.pdf}
+\caption[Rotation eines Baums]{Rotation eines Baums}
+\label{fig:rotation}
+\end{figure}
 
 \subsection{Find}
 \label{sec:find}
