@@ -49,7 +49,7 @@
 \subject{Seminararbeit}
 \title{Randomisierte Datenstrukturen - Treaps}
 \author{Moritz Beck, Robert McDaniel}
-\date{Eingereicht am 24. 06 2015} %TODO? Gehe davon aus, dass wir das am Mittwoch abgeben
+\date{Eingereicht am 24.06.2015}
 \titlehead{Julius-Maximilians-Universität Würzburg\\
 Institut für Informatik\\
 Lehrstuhl für Informatik I\\
@@ -207,8 +207,6 @@ Man kann die Prioritäten effizient beim Einfügen eines Knotens durch einen Zuf
 
 \section{Implementierung}
 \label{sec:implementing}
-% TODO: erkläre Rotation: - erhält Suchbaumeigenschaft, verändert die Reihenfolge zweier Knoten bzgl. Priorität
-%       erkläre nach unten/oben rotieren (normalerweise ist die Definition Rechts-/Linksrotation)
 \subsection{Rotation}
 \label{sec:rotation}
 Bei den Update-Operationen werden Baumrotationen benutzt, um Knoten im Treap zu verschieben.
@@ -361,7 +359,6 @@ Die in dieser Arbeit vorgestellten Treaps stellen eine gute Option zum Verwalten
 Gegenüber einfachen binären Suchbäumen haben Treaps den Vorteil, dass sie balanciert werden, was insbesondere dann eine Rolle spielt, wenn Elemente häufig in auf-/absteigender Folge eingefügt werden.
 Gegenüber anderen (deterministischen) balancierten Suchbäumen haben Treaps den Vorteil, dass die Implementierung einfach ist.
 Außerdem ist es möglich, keinen zusätzlichen Speicherplatz für Balancierungsinformationen zu verwenden, wenn man statt explizite Prioritäten anzugeben auf eine Hashfunktion setzt.
-%TODO Nachteil?
 Allerdings ist die schnelle Laufzeit bei Treaps nicht garantiert, sondern nur sehr unwahrscheinlich, da es sich um einen Erwartungswert handelt.
 Abschließend sei hier nochmal der direkte Vergleich der Laufzeiten dargestellt:
 
