@@ -346,12 +346,13 @@ Möchte man die Anzahl dieser Knoten zählen, spielt man im Prinzip Spiel A mit 
 Damit ergibt sich ein erwartete Anzahl von $H_{\left|P\right|} = H_r$.
 Betrachtet man auch die Knoten entlang des Suchpfades aus $X_\geq$, so ergibt sich aus Symmetriegründen eine erwartete Tiefe von $H_r + H_{n-r+1} - 1 \in O(\log n)$ für den Knoten $x$.
 Eine Visualisierung der Korrespondenz von Treap und Spiel A findet man in Abbildung~\ref{fig:proofgamea}.
-% TODO: Bild einfügen
 \begin{figure}
-\centering
-\includegraphics[page=10,width=\textwidth]{img/Laufzeit_Beweis.pdf}
-\caption[Beispiel: Treap mit Spiel A]{Beispiel für einen Treap und das zugehörige Spiel A. Dabei wird die Tiefe des Knoten mit dem Schlüsselwert $6$ analysiert.}
-\label{fig:proofgamea}
+    \centering
+    \includegraphics[page=10,width=\textwidth]{img/Laufzeit_Beweis.pdf}
+    \caption[Beispiel: Treap mit Spiel A]{Beispiel für einen Treap und das zugehörige Spiel A.
+    Dabei wird die Tiefe des Knoten mit dem Schlüsselwert $6$ analysiert.
+    Die ausgegrauten Kästchen mit den Werten $7$, $8$ und $9$ stellen Zuschauer dar.}
+    \label{fig:proofgamea}
 \end{figure}
 Ähnlich kann man auch für die Anzahl der Rotationen argumentieren.
 Hierbei spielt man Spiel D mit $P = X_\leq \setminus \{x\}$, $T = \{x\}$ und $B = X \setminus X_\leq$, das den Erwartungswert $H_{r-1} + H_1 - H_r = 1 - 1/r$ hat.
