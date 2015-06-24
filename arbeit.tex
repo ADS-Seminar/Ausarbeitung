@@ -200,23 +200,79 @@ Dieser Satz zeigt, dass die Reihenfolge, in der die Knoten eingefügt werden, be
 % TODO: erkläre Rotation: - erhält Suchbaumeigenschaft, verändert die Reihenfolge zweier Knoten bzgl. Priorität
 %       erkläre nach unten/oben rotieren (normalerweise ist die Definition Rechts-/Linksrotation)
 
+In diesem Kapitel wird das Prinzip der Rotation bei Treaps genauer erläutert und es werden die vorher definierten, gewünschten Methoden in Pseudocode implementiert.
+
+\subsection{Rotation}
+\label{sec:rotation}
+
 \subsection{Find}
 \label{sec:find}
 
 \subsection{Insert}
 \label{sec:insert}
 
+\begin{algorithm}[H]
+	\Ein{Knoten $i$, Treap $S$}
+		Füge $i$ als Blatt in $S$ ein \;
+		\While{$i$.parent.prio $<$ $i$.prio}{
+			Rotiere $i$ nach oben \;
+		}
+	\caption{Insert($i$, $S$)}
+\end{algorithm}
+
 \subsection{Delete}
 \label{sec:delete}
+
+\begin{algorithm}[H]
+	\Ein{Schlüssel $k$, Treap $S$}
+		\SetKw{Not}{not}
+		\While{\Not istBlatt($i$)}{
+			Rotiere $i$ nach unten \;
+		}
+		Lösche Blatt $i$ aus $S$ \;
+	\caption{Delete($k$, $S$)}
+\end{algorithm}
 
 \subsection{Join}
 \label{sec:join}
 
+\begin{algorithm}[H]
+	\Ein{Treaps $S_1, S_2$, Knoten $i$}
+	\Aus{Treap $S$}
+		\SetKw{Or}{or}
+		$i$.left $\gets S_1$ \;
+		$i$.right $\gets S_2$ \;
+		\While{$i$.prio $<$ $i$.left.prio\\ \Or $i$.prio $<$ $i$.right.prio}{
+			Rotiere $i$ nach unten \;
+		}
+		\Return $i$
+	\caption{Join($S_1$, $i$, $S_2$)}
+\end{algorithm}
+
 \subsection{Merge}
 \label{sec:merge}
 
+\begin{algorithm}[H]
+	\Ein{Treaps $S_1, S_2$}
+	\Aus{Treap $S$}
+		$i$ $\gets$ Find($\infty$, $S_1$) \tcp{Maximum}
+		Delete($i$, $S_1$) \;
+		\Return Join($S_1$, $i$, $S_2$) \;
+	\caption{Merge($S_1$, $S_2$)}
+\end{algorithm}
+
 \subsection{Split}
 \label{sec:split}
+
+\begin{algorithm}[H]
+	\Ein{Treap $S$, Schlüssel $k$}
+	\Aus{Treaps $i$.left, $i$.right}
+		Delete($k$, $S$) \tcp{falls existent}
+		$i \gets (k, \infty)$ \;
+		Insert($i$, $S$) \;
+		\Return $i$.left, $i$.right;
+	\caption{Split($k$, $S$)}
+\end{algorithm}
 
 \section{Laufzeitanalyse}
 \label{sec:runtime}
