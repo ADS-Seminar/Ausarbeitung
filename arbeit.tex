@@ -189,11 +189,21 @@ Man nehme einen Binärbaum, bei dem jeder Knoten zwei Zahlen enthält: Einen Sch
 \begin{satz}
 Für jede Menge $S = \{(k_1,p_1), \dots, (k_n, p_n)\}$ von Schlüssel-Priorität-Paaren mit paarweise unterschiedlichen Schlüsseln und Prioritäten existiert genau ein gültiger Treap.
 \end{satz}
-\begin{beweis}
-Es ist trivial, dass dieser Satz für $n = 0$ und $n = 1$ gilt. Betrachten wir jetzt $n \geq 2$, und nehmen an, dass $(k_1, p_1)$ die größte Priorität in $S$ hat. Wir konstruieren einen Treap, indem wir diesen ersten Knoten als die Wurzel für den Treap nehmen, den linken Teilbaum rekursiv aus den Knoten $j$ mit $k_j < k_1$ und den rechten Teilbaum rekursiv aus den Knoten $l$ mit $k_l > k_1$. Es ist weiterhin einfach zu sehen, dass jeder Treap für die Menge $S$ auf diese Weise zusammengesetzt wird.
-\end{beweis}
+\begin{beweis}[Beweis per Induktion über $n = |S|$]
+\noindent\textbf{IA:} ($n = 0$) trivial
 
-Dieser Satz zeigt, dass die Reihenfolge, in der die Knoten eingefügt werden, beliebig sein kann -- am Ende kommt immer der gleiche Treap heraus. Wenn wir den Baum optimal für eine gegebene Menge an Schlüsseln balancieren wollen, ist es wichtig, die Prioritäten richtig zu wählen. Hier kommt die Randomisierung ins Spiel: Dadurch, dass komplett zufällig gewählte Prioritäten in Richtung einer gleichmäßigen Verteilung tendieren, sind sie ideal für Treaps -- sie sind gleichmäßig und schnell zu erstellen (zum Beispiel durch eine Hashfunktion).
+\noindent\textbf{IS:} ($n \to n+1$)
+Sei $t = (k_j, p_j)$ das Paar mit der höchsten Priorität.
+Dieses Element muss dann an der Wurzel des Treaps stehen.
+Alle Elemente aus $M_< := \{(k_i, p_i) \in S \mid k_i < k_j\}$, die also einen kleineren Schlüssel als die Wurzel besitzen, müssen im linken Teilbaum liegen, analog gilt dies für die Elemente mit größerem Schlüssel als $t$.
+Beide Teilbäume sind ebenfalls Treaps und sind nach der Induktionsvorraussetzung eindeutig bestimmt.
+\end{beweis} %TODO: Bild
+
+Dieser Satz zeigt, dass die Reihenfolge, in der die Knoten eingefügt werden, beliebig sein kann -- am Ende kommt immer der gleiche Treap heraus.
+Wenn wir den Baum optimal für eine gegebene Menge an Schlüsseln balancieren wollen, ist es wichtig, die Prioritäten richtig zu wählen.
+Hier kommt die Randomisierung ins Spiel:
+Dadurch, dass zufällig gewählte Prioritäten dem Treap eine zufällige -- und damit wahrscheinlich balancierte -- Form geben, sind sie ideal für Treaps.
+Man kann die Prioritäten effizient beim Einfügen eines Knotens durch einen Zufallsgenerator oder implizit durch eine Hashfunktion generiert werden.
 
 \section{Implementierung}
 \label{sec:implementing}
