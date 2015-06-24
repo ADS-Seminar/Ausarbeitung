@@ -78,7 +78,7 @@ Genauer werden in Abschnitt \ref{sec:treapsbasics} die Grundlagen für den Aufba
 
 %TODO Laufzeitanalyse
 
-In Abschnitt \ref{sec:closing} wird ein Abschlussfazit gezogen, wobei noch einmal ein kurzer Vergleich zwischen Binärbäumen und Treaps gemacht wird. %TODO Und vielleicht noch mehr?
+In Abschnitt \ref{sec:closing} wird ein Abschlussfazit gezogen, wobei noch einmal ein kurzer Vergleich zwischen Binärbäumen und Treaps gemacht wird.
 
 \chapter{Motivation}
 \label{sec:motivation}
@@ -150,9 +150,7 @@ Wenn ein geringer Verbrauch an Speicherplatz wichtig ist, kann dies ebenfalls ei
 
 Die Lösung für diese Probleme, die in dieser Arbeit näher dargestellt wird, ist Randomisierung.
 Sie ist einfach zu implementieren, schnell auszuführen und benötigt keine weitere Speicherung von Balancierungs-Informationen, wenn sie zum Beispiel durch Hash-Funktionen erreicht wird.
-Im nächsten Kapitel wird darauf eingegangen, wie eine Datenstruktur durch Einsatz von Randomisierung es sehr wahrscheinlich macht, dass der erstellte Baum zum best-case hin tendiert.
-
-%TODO Passt das so? Vielleicht noch mehr? Keine Ahnung, wie viel der Rest noch wird
+Im nächsten Kapitel wird darauf eingegangen, wie Treaps durch Einsatz von Randomisierung den best-case beim erstellten Baum sehr wahrscheinlich machen.
 
 \chapter{Treaps}
 \label{sec:treaps}
@@ -223,6 +221,8 @@ Beispielsweise wird der rote Knoten in Abbildung~\ref{fig:rotation} durch eine R
 
 \subsection{Find}
 \label{sec:find}
+
+Find wird genau wie bei binären Suchbäumen durchgeführt.
 
 \subsection{Insert}
 \label{sec:insert}
